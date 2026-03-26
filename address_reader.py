@@ -55,4 +55,6 @@ class AddressReader:
         """
         domain_length = receive_all(client_socket, DOMAIN_SIZE_FIELD)
         domain = receive_all(client_socket, domain_length[0])
+        if domain_length > len(domain):
+            raise ValueError("Malformed Socks packet.")
         return domain.decode()

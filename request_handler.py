@@ -43,7 +43,7 @@ class RequestHandler:
                 response = SocksResponse(reply=exception.reply)
                 client_socket.sendall(self.response_serializer.to_bytes(response)) #TODO maybe change responder
                 return ConnectionState.CLOSED, None
-        except ValueError as exception:
+        except (OSError, ValueError) as exception:
             return ConnectionState.CLOSED, None
             
         destination_socket, response = self._connect(request)
